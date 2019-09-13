@@ -4,10 +4,12 @@ def devQAStaging() {
 			
 	def jdk = tool name: 'localJDK'
 	env.JAVA_HOME = "${jdk}"
-		
-    env.PATH="${tool 'localMaven'}/bin:${env.PATH}"
+	withEnv(["PATH+MAVEN=${tool 'localMaven'}/bin"]) {
+				bat 'mvn -o clean package'
+	}	
+    //env.PATH="${tool 'localMaven'}/bin:${env.PATH}"
     stage 'Dev'
-    bat 'mvn -o clean package'
+    //bat 'mvn -o clean package'
     archive '**/*.war'
 
     stage 'QA'
