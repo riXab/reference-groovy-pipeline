@@ -2,12 +2,8 @@ def devQAStaging() {
 
 	//git url: "https://github.com/riXab/groovy-pipeline-scripting.git"
 			
-	//def v = version()
-	//if (v) {
-	//echo "Building version ${v}"
-	//}
-	//def jdk = tool name: 'localJDK'
-	//env.JAVA_HOME = "${jdk}"
+	def jdk = tool name: 'localJDK'
+	env.JAVA_HOME = "${jdk}"
 		
     env.PATH="${tool 'localMaven'}/bin:${env.PATH}"
     stage 'Dev'
@@ -17,11 +13,11 @@ def devQAStaging() {
     stage 'QA'
 
     parallel(longerTests: {
-        runWithServer {url ->"https://github.com/riXab/groovy-pipeline-scripting.git"
+        runWithServer {url ->  //"https://github.com/riXab/groovy-pipeline-scripting.git"
             bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=30"
         }
     }, quickerTests: {
-        runWithServer {url ->"https://github.com/riXab/groovy-pipeline-scripting.git"
+        runWithServer {url -> //"https://github.com/riXab/groovy-pipeline-scripting.git"
             bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=20"
         }
     })
