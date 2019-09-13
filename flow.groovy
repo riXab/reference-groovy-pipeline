@@ -1,8 +1,8 @@
 def devQAStaging() {
-    env.PATH="${tool 'Maven 3.x'}/bin:${env.PATH}"
+    env.PATH="${tool 'localMaven'}/bin:${env.PATH}"
     stage 'Dev'
     sh 'mvn -o clean package'
-    archive 'target/x.war'
+    archive '**/*.war'
 
     stage 'QA'
 
@@ -16,7 +16,7 @@ def devQAStaging() {
         }
     })
     stage name: 'Staging', concurrency: 1
-    deploy 'target/x.war', 'staging'
+    deploy '**/*.war', 'staging'
 }
 
 def production() {
@@ -29,7 +29,7 @@ def production() {
     stage name: 'Production', concurrency: 1
     node('master') {
         sh 'curl -I http://localhost:8080/staging/'
-        unarchive mapping: ['target/x.war' : 'x.war']
+        unarchive mapping: ['**/*.war' : 'x.war']
         deploy 'x.war', 'production'
         echo 'Deployed to http://localhost:8080/production/'
     }
@@ -45,7 +45,7 @@ def undeploy(id) {
 
 def runWithServer(body) {
     def id = UUID.randomUUID().toString()
-    deploy 'target/x.war', id
+    deploy '**/*.war', id
     try {
         body.call "http://localhost:8080/${id}/"
     } finally {
