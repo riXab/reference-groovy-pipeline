@@ -1,6 +1,6 @@
 def devQAStaging() {
 
-	//git url: "https://github.com/riXab/groovy-pipeline-scripting.git"
+	git url: "https://github.com/riXab/groovy-pipeline-scripting.git"
 			
 	def jdk = tool name: 'localJDK'
 	env.JAVA_HOME = "${jdk}"
