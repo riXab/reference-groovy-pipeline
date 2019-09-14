@@ -1,5 +1,7 @@
 def devQAStaging() {
 
+	checkout scm 
+	
 	git url: "https://github.com/riXab/groovy-pipeline-scripting.git"
 			
 	def jdk = tool name: 'localJDK'
@@ -44,7 +46,7 @@ def production() {
 }
 
 def deploy(war, id) {
-    bat "cp ${war} /tmp/webapps/${id}.war"
+    bat "copy ${war} /tmp/webapps/${id}.war"
 }
 
 def undeploy(id) {
