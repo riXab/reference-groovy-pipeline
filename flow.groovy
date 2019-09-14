@@ -24,7 +24,7 @@ def devQAStaging() {
 			prinln "DONE batch command"
         }
     }, quickerTests: {
-		println "Starting Longer branch"
+		println "Starting Quicker branch"
         runWithServer {url -> //"https://github.com/riXab/groovy-pipeline-scripting.git"
             prinln "Executing btach command"
 			bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=20"
@@ -53,9 +53,9 @@ def production() {
 
 def deploy(war, id) {
 	echo "start copying war file to tmp/webapps/ location"
-	println "start copying war file to tmp/webapps/ location"
-	bat "mkdir tmp & cd tmp & mkdir webapps & copy ${war} webapps"
-   // bat ""
+	//println "start copying war file to tmp/webapps/ location"
+	bat "mkdir tmp & cd tmp & mkdir webapps"
+    bat "copy ${war} webapps"
 	//bat "copy ${war} webapps/${id}.war"
 	echo "finished copying war file to tmp/webapps/ location"
 }
