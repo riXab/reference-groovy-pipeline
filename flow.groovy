@@ -47,7 +47,8 @@ def production() {
 
 def deploy(war, id) {
 	bat "mkdir tmp & cd tmp & mkdir webapps"
-    bat "copy ${war} /tmp/webapps/${id}.war"
+    bat "copy ${war} webapps"
+	//bat "copy ${war} webapps/${id}.war"
 	echo "copying war file to tmp/webapps/ location"
 }
 
