@@ -1,19 +1,21 @@
 def devQAStaging() {
-
-	checkout scm 
-	
+	echo "******Starting devQAStaging"
+	checkout scm 	
+	echo "******Checkouted SCM"
 	git url: "https://github.com/riXab/groovy-pipeline-scripting.git"
-			
+	echo "******GIt URL given"		
 	def jdk = tool name: 'localJDK'
 	env.JAVA_HOME = "${jdk}"
 	withEnv(["PATH+MAVEN=${tool 'localMaven'}/bin"]) {
 				bat 'mvn -o clean package'
 	}	
     //env.PATH="${tool 'localMaven'}/bin:${env.PATH}"
+	echo "******Stage - DEV"
     stage 'Dev'
     //bat 'mvn -o clean package'
+	echo "******Archiving war"
     archive '**/*.war'
-
+	echo "******Stage QA"
     stage 'QA'
 	echo "**********Now, Staging"
     parallel(longerTests: {
