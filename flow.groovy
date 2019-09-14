@@ -19,20 +19,22 @@ def devQAStaging() {
     parallel(longerTests: {
 		println "Starting Longer branch"
         runWithServer {url ->  //"https://github.com/riXab/groovy-pipeline-scripting.git"
-            prinln "Executing btach command"
+            println "Executing btach command"
 			bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=30"
-			prinln "DONE batch command"
+			println "DONE batch command"
         }
     }, quickerTests: {
 		println "Starting Quicker branch"
         runWithServer {url -> //"https://github.com/riXab/groovy-pipeline-scripting.git"
-            prinln "Executing btach command"
+            println "Executing btach command"
 			bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=20"
-			prinln "DONE btach command"
+			println "DONE btach command"
         }
     })
     stage name: 'Staging', concurrency: 1
+	echo "Starting Deployment for Staging.."
     deploy '**/*.war', 'staging'
+	echo "Finished Deployment to Staging.."
 }
 
 def production() {
