@@ -15,7 +15,7 @@ def devQAStaging() {
     archive '**/*.war'
 
     stage 'QA'
-	echo"**********Now, Staging"
+	echo "**********Now, Staging"
     parallel(longerTests: {
 		println "Starting Longer branch"
         runWithServer {
@@ -36,9 +36,9 @@ def devQAStaging() {
         }
     })
     stage name: 'Staging', concurrency: 1
-	echo"**********Starting Deployment for Staging.."
+	echo "**********Starting Deployment for Staging.."
     deploy '**/*.war', 'staging'
-	echo"**********Finished Deployment to Staging.."
+	echo "**********Finished Deployment to Staging.."
 }
 
 def production() {
@@ -58,16 +58,16 @@ def production() {
 }
 
 def deploy(war, id) {
-	echo"**********start copying war file to tmp/webapps/ location"
+	echo "**********start copying war file to tmp/webapps/ location"
 	//println "start copying war file to tmp/webapps/ location"
 	bat "mkdir tmp & cd tmp & mkdir webapps"
     bat "copy ${war} webapps"
 	//bat "copy ${war} webapps/${id}.war"
-	echo"**********finished copying war file to tmp/webapps/ location"
+	echo "**********finished copying war file to tmp/webapps/ location"
 }
 
 def undeploy(id) {
-	echo"**********deleting war file from tmp/webapps/ location"
+	echo "**********deleting war file from tmp/webapps/ location"
     bat "rm /tmp/webapps/${id}.war"
 }
 
