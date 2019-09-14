@@ -17,12 +17,18 @@ def devQAStaging() {
     stage 'QA'
 
     parallel(longerTests: {
+		println "Starting Longer branch"
         runWithServer {url ->  //"https://github.com/riXab/groovy-pipeline-scripting.git"
-            bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=30"
+            prinln "Executing btach command"
+			bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=30"
+			prinln "DONE batch command"
         }
     }, quickerTests: {
+		println "Starting Longer branch"
         runWithServer {url -> //"https://github.com/riXab/groovy-pipeline-scripting.git"
-            bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=20"
+            prinln "Executing btach command"
+			bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=20"
+			prinln "DONE btach command"
         }
     })
     stage name: 'Staging', concurrency: 1
@@ -46,10 +52,12 @@ def production() {
 }
 
 def deploy(war, id) {
-	bat "mkdir tmp & cd tmp & mkdir webapps"
-    bat "copy ${war} webapps"
+	echo "start copying war file to tmp/webapps/ location"
+	println "start copying war file to tmp/webapps/ location"
+	bat "mkdir tmp & cd tmp & mkdir webapps & copy ${war} webapps"
+   // bat ""
 	//bat "copy ${war} webapps/${id}.war"
-	echo "copying war file to tmp/webapps/ location"
+	echo "finished copying war file to tmp/webapps/ location"
 }
 
 def undeploy(id) {
