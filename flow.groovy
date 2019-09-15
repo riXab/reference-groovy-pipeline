@@ -22,7 +22,7 @@ def devQAStaging() {
 		println "Starting Longer branch"
         runWithServer {
 			println "Run with Server"
-			url ->  //"https://github.com/riXab/groovy-pipeline-scripting.git"
+			url ->  
             println "Executing btach command"
 			bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=30"
 			println "DONE batch command"
@@ -31,7 +31,7 @@ def devQAStaging() {
 		println "Starting Quicker branch"
         runWithServer {
 			println "Run with Server"
-			url -> //"https://github.com/riXab/groovy-pipeline-scripting.git"
+			url -> 
             println "Executing btach command"
 			bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=20"
 			println "DONE btach command"
