@@ -27,9 +27,7 @@ def devQAStaging() {
         }
     }, quickerTests: {
 		println "Starting Quicker branch"
-        runWithServer {
-			println "Run with Server"
-			url -> 
+        runWithServer {url -> 
             println "Executing btach command"
 			bat "mvn -o -f sometests/pom.xml test -Durl=${url} -Dduration=20"
 			println "DONE btach command"
